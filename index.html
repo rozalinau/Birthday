@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffd9e2" />
+  <title>Для Артёма — 23 ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fff7f3;
+      --paper:#fffdf9;
+      --pink:#f58da7;
+      --pink2:#ffd5df;
+      --red:#d94b6a;
+      --ink:#5d3b42;
+      --cream:#fff2da;
+      --shadow:0 18px 50px rgba(171,73,95,.15);
+      --line:#f3b8c5;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Nunito",system-ui,sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%,#ffe4ea 0 4%,transparent 4.2%),
+        radial-gradient(circle at 88% 12%,#fff0c9 0 3%,transparent 3.2%),
+        linear-gradient(180deg,#fff9f6,#fff2f6);
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.25;
+      background-image:radial-gradient(#e8b9c4 0.7px,transparent 0.7px);
+      background-size:10px 10px;
+      z-index:-1;
+    }
+    .app{max-width:980px;margin:0 auto;padding:14px 14px 60px}
+    .browser{
+      position:sticky;top:8px;z-index:50;
+      height:42px;border:1.5px solid var(--line);border-radius:18px;
+      background:rgba(255,250,247,.82);backdrop-filter:blur(16px);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 14px;box-shadow:0 6px 20px rgba(198,94,119,.1);
+      margin-bottom:14px
+    }
+    .dots{display:flex;gap:7px}.dot{width:8px;height:8px;border-radius:50%;background:#ff9aae}
+    .dot:nth-child(2){background:#ffc779}.dot:nth-child(3){background:#ffdb9d}
+    .url{font-size:12px;color:#9d7881}.music{
+      border:1.5px solid var(--line);background:#fff;border-radius:999px;width:30px;height:30px;
+      display:grid;place-items:center;cursor:pointer;transition:.2s
+    }
+    .music.on{background:#ffe1e8;transform:rotate(-6deg)}
+    .screen{display:none;
+      min-height:calc(100vh - 84px);
+      border:1.5px solid var(--line);
+      border-radius:28px;
+      background:rgba(255,252,249,.92);
+      box-shadow:var(--shadow);
+      padding:26px;
+      margin:14px 0;
+      position:relative;overflow:hidden;
+      display:grid;align-items:center
+    }
+    .screen.active{display:grid;animation:slideIn .45s ease both}
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.screen::after{
+      content:"♡"; position:absolute; right:24px; bottom:10px;
+      font:700 72px/1 "Caveat"; color:#ffe0e7; transform:rotate(-12deg); z-index:0
+    }
+    .sticker{
+      position:absolute; z-index:3; pointer-events:none;
+      filter:drop-shadow(0 10px 18px rgba(0,0,0,.12));
+      animation:floaty 3.8s ease-in-out infinite;
+      user-select:none;
+    }
+    .sticker img{display:block; width:100%; height:auto}
+    .s-omnom{width:86px; left:10px; top:18px; transform:rotate(-8deg)}
+    .s-pleading{width:100px; right:10px; bottom:64px; transform:rotate(8deg)}
+    .s-kiss{width:82px; right:12px; top:48px; transform:rotate(-10deg)}
+    .screen:nth-of-type(2) .s-kiss{top:20px; right:14px}
+    .screen:nth-of-type(4) .s-omnom{left:auto; right:14px; top:18px}
+    .screen:nth-of-type(5) .s-pleading{left:12px; right:auto; top:26px; bottom:auto}
+    @keyframes floaty{50%{transform:translateY(-8px) rotate(4deg)}}
+
+    .content{position:relative;z-index:2}
+    .kicker{
+      font:700 20px "Caveat"; color:var(--red); letter-spacing:.5px;
+      text-align:center;margin-bottom:8px
+    }
+    h1,h2{font-family:"Caveat",cursive;color:var(--red);margin:0;text-align:center}
+    h1{font-size:clamp(48px,9vw,88px);line-height:.95}
+    h2{font-size:clamp(38px,7vw,64px);line-height:1}
+    .sub{text-align:center;max-width:640px;margin:14px auto 0;font-size:15px;line-height:1.65}
+    .stars{position:absolute;inset:0;pointer-events:none;z-index:1}
+    .stars span{position:absolute;font-size:18px;animation:twinkle 2.2s infinite alternate}
+    @keyframes twinkle{from{transform:scale(.7) rotate(-8deg);opacity:.35}to{transform:scale(1.15) rotate(8deg);opacity:1}}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
+    .photo-frame{
+      width:min(390px,88%);aspect-ratio:1/1;margin:auto;padding:11px;
+      border:3px solid var(--pink);border-radius:38% 38% 45% 45%;
+      background:#fff;box-shadow:0 14px 30px rgba(209,82,112,.18);
+      position:relative
+    }
+    .photo-frame::before{
+      content:"♡ ♡ ♡ ♡ ♡ ♡ ♡ ♡";position:absolute;inset:-25px auto auto 50%;
+      transform:translateX(-50%);white-space:nowrap;color:var(--pink);font-size:20px;letter-spacing:4px
+    }
+    .photo-frame img{width:100%;height:100%;object-fit:cover;object-position:54% 48%;border-radius:inherit;display:block;background:#fff4f6}
+    .passcard{
+      background:linear-gradient(145deg,#ffd8e2,#ffc7d5);
+      border:1.5px solid #f6a9ba;border-radius:26px;padding:22px;
+      text-align:center;box-shadow:inset 0 0 0 5px rgba(255,255,255,.25)
+    }
+    .codeboxes{display:flex;justify-content:center;gap:10px;margin:16px 0}
+    .box{width:46px;height:52px;border:2px solid #fff;border-radius:12px;background:rgba(255,255,255,.3);display:grid;place-items:center;font-weight:800;font-size:24px;color:#b9415e}
+    .keypad{display:grid;grid-template-columns:repeat(3,56px);gap:10px;justify-content:center}
+    .key{
+      width:56px;height:56px;border:0;border-radius:50%;background:#fff7f8;color:#b9415e;
+      font-weight:800;font-size:20px;cursor:pointer;box-shadow:0 4px 10px rgba(160,64,86,.12);
+      transition:.15s
+    }
+    .key:active{transform:scale(.92)}
+    .password-input{
+      display:block;width:min(240px,85%);margin:12px auto 14px;padding:13px 16px;
+      border:2px solid #fff;border-radius:16px;background:rgba(255,255,255,.65);
+      color:#b9415e;font:800 24px "Nunito";text-align:center;letter-spacing:5px;outline:none;
+      box-shadow:0 4px 10px rgba(160,64,86,.08)
+    }
+    .password-input:focus{border-color:#f58da7;background:#fff}
+    .password-btn{font-size:16px;padding:11px 20px;box-shadow:0 6px 0 #c65370,0 10px 18px rgba(197,82,109,.2)}
+    .hint{font-size:12px;opacity:.7;margin-top:10px}
+    .cta{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:none;border-radius:18px;padding:14px 24px;background:linear-gradient(#f796ae,#eb6f8d);
+      color:white;font-weight:800;font-size:18px;cursor:pointer;box-shadow:0 8px 0 #c65370,0 12px 24px rgba(197,82,109,.25);
+      transition:.2s;text-decoration:none
+    }
+    .cta:active{transform:translateY(5px);box-shadow:0 3px 0 #c65370}
+    .center{text-align:center}
+    .cats{font-size:90px;filter:drop-shadow(0 10px 12px rgba(0,0,0,.08));animation:bob 2.3s ease-in-out infinite}
+    @keyframes bob{50%{transform:translateY(-8px) rotate(1deg)}}
+    .age{
+      display:inline-grid;place-items:center;width:110px;height:110px;border-radius:50%;
+      background:#fff0f4;border:4px dashed var(--pink);font:700 60px "Caveat";color:var(--red);
+      margin:12px auto;animation:pulse 1.8s infinite
+    }
+    @keyframes pulse{50%{transform:scale(1.05)}}
+    .cake{font-size:96px;cursor:pointer;display:inline-block;transition:.2s}
+    .cake:hover{transform:rotate(-3deg) scale(1.05)}
+    .hug-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:28px;align-items:center}
+    .hug-emoji{font-size:120px;text-align:center}
+    .big-note{
+      background:#fff7f4;border:2px dashed var(--pink);border-radius:28px;padding:26px;text-align:center
+    }
+    .gallery{
+      display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:14px;align-items:center;margin-top:20px
+    }
+    .heart-photo,.memory-photo{
+      position:relative;overflow:hidden;border:8px solid #fff;box-shadow:0 12px 24px rgba(147,70,87,.15);
+      background:#f9dce3
+    }
+    .memory-photo{aspect-ratio:4/5;border-radius:28px;transform:rotate(-2deg)}
+    .memory-photo.big{aspect-ratio:1/1.2;transform:rotate(2deg)}
+    .memory-photo:last-child{transform:rotate(-4deg)}
+    .memory-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .date-ribbon{
+      width:max-content;margin:22px auto 0;padding:9px 24px;border:2px solid var(--pink);
+      border-radius:999px;background:#fff6f8;font:700 26px "Caveat";color:var(--red)
+    }
+    .letter-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:start;margin-top:18px}
+    .rosie-card{
+      position:sticky;top:72px;background:#fff;border:8px solid #fff;border-radius:24px;
+      box-shadow:0 16px 30px rgba(132,67,81,.15);overflow:hidden;transform:rotate(-1.5deg)
+    }
+    .rosie-card img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover}
+    .rosie-card .cap{padding:12px 10px;text-align:center;font:700 26px "Caveat";color:var(--red)}
+    .letter{
+      background:
+        repeating-linear-gradient(#fffdf9 0 35px,#efcfd6 36px 37px);
+      border:2px solid #f0b6c3;border-radius:24px;padding:24px 28px;
+      box-shadow:0 12px 24px rgba(139,71,89,.1);
+      font-size:17px;line-height:2.05;white-space:pre-line
+    }
+    .final{
+      background:
+        linear-gradient(rgba(255,248,248,.74),rgba(255,248,248,.86)),
+        url('assets/couple1.jpeg') center/cover;
+      text-align:center
+    }
+    .final-card{max-width:700px;margin:auto;padding:28px;border-radius:28px;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border:1.5px solid var(--line)}
+    .heartburst{position:fixed;z-index:999;pointer-events:none;font-size:24px;animation:fly 1.3s ease-out forwards}
+    @keyframes fly{to{transform:translate(var(--x),-160px) rotate(30deg) scale(1.5);opacity:0}}
+    .confetti{position:fixed;top:-20px;z-index:9999;pointer-events:none;animation:fall 2.8s linear forwards}
+    @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.8}}
+    .navdots{
+      position:fixed;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:30
+    }
+    .navdots a{width:10px;height:10px;border-radius:50%;background:#e8a4b4;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    
+    .slide-nav{
+      position:absolute;left:18px;right:18px;bottom:14px;z-index:8;
+      display:flex;align-items:center;justify-content:space-between;gap:12px
+    }
+    .slide-arrow{
+      width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--red);font-size:24px;font-weight:800;
+      cursor:pointer;box-shadow:0 8px 18px rgba(173,78,100,.13)
+    }
+    .slide-arrow:disabled{opacity:.25;cursor:default}
+    .slide-count{
+      flex:1;text-align:center;font:700 18px "Caveat";color:#b95a70
+    }
+    .sticker{background:transparent!important}
+    .sticker img{background:transparent!important;filter:drop-shadow(0 8px 14px rgba(86,52,58,.14))}
+    @media(max-width:760px){
+      .app{padding:8px 8px 40px}
+      .browser{top:5px}
+      .screen{display:none;min-height:calc(100svh - 72px);padding:22px 16px;border-radius:22px}
+      .hero-grid,.hug-wrap,.letter-layout{grid-template-columns:1fr}
+      .photo-frame{width:74%;max-width:330px}
+      .passcard{max-width:360px;margin:0 auto}
+      .gallery{grid-template-columns:1fr 1fr}
+      .gallery .big{grid-column:span 2;grid-row:1}
+      .rosie-card{position:relative;top:auto;max-width:330px;margin:auto}
+      .letter{font-size:15px;line-height:1.9;padding:20px}
+      .navdots{display:none}
+      .cats{font-size:76px}
+    }
+  
+    html, body{
+      width:100%;
+      height:100%;
+      overflow:hidden !important;
+      overscroll-behavior:none;
+    }
+    body{position:fixed; inset:0;}
+    .app{
+      height:100svh;
+      overflow:hidden;
+      padding-bottom:8px;
+    }
+    .screen{
+      height:calc(100svh - 72px);
+      min-height:0 !important;
+      overflow-y:auto;
+      overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:78px;
+    }
+    .slide-nav{
+      justify-content:space-between;
+      pointer-events:none;
+    }
+    .slide-arrow{pointer-events:auto}
+    .slide-count{display:none !important}
+    #welcome .prev{visibility:hidden}
+    #welcome.locked .next{visibility:hidden}
+
+
+    .screen.active{
+      display:grid !important;
+    }
+    @media(max-width:760px){
+      .screen.active{
+        display:grid !important;
+      }
+    }
+
+</style>
+</head>
+<body>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/always-forever.mp3" type="audio/mpeg">
+  </audio>
+  <div class="app">
+    <div class="browser">
+      <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="url">🔒 just-for-artem.com</div>
+      <button class="music" id="musicBtn" aria-label="Музыка">♪</button>
+    </div>
+
+    
+
+    <section class="screen active locked" id="welcome">
+      <div class="sticker s-omnom"><img src="assets/sticker-omnom.png" alt=""></div>
+      <div class="sticker s-pleading"><img src="assets/sticker-pleading.png" alt=""></div>
+      <div class="stars">
+        <span style="left:7%;top:14%">✦</span><span style="left:88%;top:11%">♡</span>
+        <span style="left:12%;top:71%">☆</span><span style="left:91%;top:67%">✦</span>
+        <span style="left:45%;top:7%">♡</span>
+      </div>
+      <div class="content hero-grid">
+        <div>
+          <div class="kicker">Добро пожаловать, Артём ♡</div>
+          <div class="photo-frame"><img src="assets/hero.jpeg" alt="Роузи и Артём"></div>
+        </div>
+        <div class="passcard">
+          <h2>Открой сюрприз</h2>
+          <p>Введи особенный код 💌</p>
+          <div class="codeboxes" id="codeboxes"><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div></div>
+          <input id="passwordInput" class="password-input" type="text" maxlength="4" autocomplete="off" autocapitalize="none" placeholder="••••" aria-label="Пароль">
+          <button class="cta password-btn" id="passwordBtn">Открыть ♡</button>
+          <div class="hint">подсказка: слово, которое знаешь только ты ✨</div>
+          <p id="status" style="min-height:24px;font-weight:800;color:#c84c69"></p>
+        </div>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+
+    <section class="screen" id="birthday">
+      <div class="sticker s-kiss"><img src="assets/sticker-kiss.png" alt=""></div>
+      <div class="content center">
+        <div class="kicker">Я сделала для тебя кое-что особенное</div>
+        <div class="cats">🐱🎁🐱</div>
+        <h1>Happy Birthday, baby!</h1>
+        <div class="age">23</div>
+        <p class="sub"><b>5 сентября 2003</b> появился человек, которого сегодня очень-очень любят 💗</p>
+        <div class="cake" id="cake" title="Нажми на торт">🎂</div><br>
+        <button class="cta" id="wishBtn">Задуть свечи ✨</button>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+
+    <section class="screen" id="hug">
+      <div class="content hug-wrap">
+        <div class="hug-emoji">🫂💞</div>
+        <div class="big-note">
+          <div class="kicker">Virtual hug for ya!</div>
+          <h1>Я скучаю по тебе</h1>
+          <p class="sub">Расстояние — это просто километры. Объятия всё равно долетают.</p>
+          <button class="cta" id="hugBtn">Получить объятие ♡</button>
+        </div>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+
+    <section class="screen" id="memories">
+      <div class="content">
+        <div class="kicker">Наши воспоминания ♡</div>
+        <h2>Немного нас</h2>
+        <div class="gallery">
+          <div class="memory-photo"><img src="assets/couple1.jpeg" alt=""></div>
+          <div class="memory-photo big"><img src="assets/couple2.jpeg" alt=""></div>
+          <div class="memory-photo"><img src="assets/couple3.jpeg" alt=""></div>
+        </div>
+        <div class="date-ribbon">ты + я = ♡</div>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+
+    <section class="screen" id="letter">
+      <div class="sticker s-omnom"><img src="assets/sticker-omnom.png" alt=""></div>
+      <div class="sticker s-kiss"><img src="assets/sticker-kiss.png" alt=""></div>
+      <div class="content">
+        <div class="kicker">От Роузи — Артёму 💌</div>
+        <h2>Письмо для тебя</h2>
+        <div class="letter-layout">
+          <div class="rosie-card">
+            <img src="assets/rosie.jpeg" alt="Роузи">
+            <div class="cap">Это я тебе говорю ♡</div>
+          </div>
+          <div class="letter">Мой любимый Артём, поздравляю тебя с днём рождения! Тебе исполняется 23 года.
+
+Я очень рада, что всю свою осознанную жизнь я общаюсь с тобой и мы всегда держали связь. А теперь мы стали чем-то больше, чем просто друзьями. Мы стали любимыми людьми, которые поддерживают друг друга даже в самые трудные времена.
+
+Я хочу, чтобы мы всегда любили и уважали друг друга, чтобы мы сейчас пережили расстояние, как можно чаще виделись вживую, а затем и жили вместе и любили друг друга каждый день.
+
+Но я хочу, чтобы ты знал, что, насколько бы мир ни был для тебя несправедлив, у тебя всегда есть человек, который любит и поддержит тебя.
+
+Твоя Роузи &lt;3</div>
+        </div>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+
+    <section class="screen final" id="final">
+      <div class="sticker s-pleading"><img src="assets/sticker-pleading.png" alt=""></div>
+      <div class="content final-card">
+        <div class="kicker">И последнее…</div>
+        <h1>Ты — мой человек.</h1>
+        <p class="sub">Где бы мы ни были, ты всегда в моём сердце ♡</p>
+        <div style="font-size:76px;margin:16px">💌</div>
+        <button class="cta" id="finalBtn">Нажми сюда ♡</button>
+        <p id="finalText" class="sub" style="font-weight:800;min-height:28px"></p>
+      </div>
+    
+      <div class="slide-nav">
+        <button class="slide-arrow prev" aria-label="Назад">←</button>
+<button class="slide-arrow next" aria-label="Вперёд">→</button>
+      </div>
+</section>
+  </div>
+
+<script>
+let soundOn = false;
+const musicBtn = document.getElementById("musicBtn");
+const boxes = [...document.querySelectorAll(".box")];
+const status = document.getElementById("status");
+const passwordInput = document.getElementById("passwordInput");
+const passwordBtn = document.getElementById("passwordBtn");
+
+function tone(freq=440, dur=.09, type="sine", vol=.035){
+  if(!soundOn) return;
+  try{
+    const ctx = window.__ctx || (window.__ctx = new (window.AudioContext||window.webkitAudioContext)());
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=vol;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime+dur);
+    o.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+function chime(){
+  [523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.16,"sine",.03),i*110));
+}
+function heartBurst(x=innerWidth/2,y=innerHeight/2,n=16){
+  for(let i=0;i<n;i++){
+    const el=document.createElement("div"); el.className="heartburst"; el.textContent=i%3===0?"✨":"♡";
+    el.style.left=(x+(Math.random()*80-40))+"px"; el.style.top=(y+(Math.random()*30-15))+"px";
+    el.style.setProperty("--x",(Math.random()*180-90)+"px");
+    el.style.color=["#f17f9b","#e75b7d","#ffb6c7","#f3b561"][Math.floor(Math.random()*4)];
+    document.body.appendChild(el); setTimeout(()=>el.remove(),1400);
+  }
+}
+function confetti(n=80){
+  const bits=["💗","♡","✨","🎉","🎂","⭐"];
+  for(let i=0;i<n;i++){
+    const el=document.createElement("div"); el.className="confetti"; el.textContent=bits[Math.floor(Math.random()*bits.length)];
+    el.style.left=Math.random()*100+"vw"; el.style.fontSize=(14+Math.random()*16)+"px";
+    el.style.animationDelay=(Math.random()*.8)+"s"; document.body.appendChild(el);
+    setTimeout(()=>el.remove(),3800);
+  }
+}
+const bgMusic = document.getElementById("bgMusic");
+let musicStarted = false;
+
+async function startBackgroundMusic(){
+  if(!bgMusic) return;
+  bgMusic.volume = 0.22;
+  try{
+    await bgMusic.play();
+    musicStarted = true;
+    soundOn = true;
+    musicBtn.classList.add("on");
+    musicBtn.textContent = "♫";
+  }catch(e){
+    // Mobile browsers may block autoplay until the first user gesture.
+  }
+}
+
+musicBtn.addEventListener("click", async ()=>{
+  if(!bgMusic) return;
+  if(bgMusic.paused){
+    await startBackgroundMusic();
+  }else{
+    bgMusic.pause();
+    soundOn = false;
+    musicBtn.classList.remove("on");
+    musicBtn.textContent = "♪";
+  }
+});
+
+// Try to start once, then reliably start on the user's first tap/click.
+window.addEventListener("load", startBackgroundMusic);
+document.addEventListener("pointerdown", ()=>{
+  if(!musicStarted) startBackgroundMusic();
+}, {once:true});
+
+function syncBoxes(){
+  const chars = [...passwordInput.value.toLowerCase()];
+  boxes.forEach((b,i)=>b.textContent=chars[i] || "");
+}
+function checkPassword(){
+  const value = passwordInput.value.trim().toLowerCase();
+  if(value === "мили"){
+    status.textContent="Верно ♡ Открываю сюрприз…";
+    siteUnlocked = true;
+    document.getElementById("welcome")?.classList.remove("locked");
+    chime(); confetti(50); setTimeout(()=>showSlide(1),700);
+  }else{
+    status.textContent="Не то слово… попробуй ещё 💗";
+    passwordInput.select();
+  }
+}
+passwordInput.addEventListener("input", syncBoxes);
+passwordInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); checkPassword(); }
+});
+passwordBtn.addEventListener("click", checkPassword);
+
+document.getElementById("wishBtn").addEventListener("click",e=>{
+  confetti(100); chime(); e.target.textContent="Желание загадано ♡";
+});
+document.getElementById("cake").addEventListener("click",e=>{heartBurst(e.clientX,e.clientY,20); tone(880,.14);});
+document.getElementById("hugBtn").addEventListener("click",e=>{
+  const r=e.target.getBoundingClientRect(); heartBurst(r.left+r.width/2,r.top,34); chime(); e.target.textContent="Обнимаю крепко-крепко 🫂";
+});
+document.getElementById("finalBtn").addEventListener("click",e=>{
+  confetti(120); chime(); document.getElementById("finalText").textContent="С днём рождения, Артём. Люблю тебя. — Роузи ♡";
+});
+
+document.addEventListener("click",e=>{
+  if(e.target.closest("button")) return;
+  if(Math.random()>.62) heartBurst(e.clientX,e.clientY,4);
+});
+
+
+const slides = [...document.querySelectorAll(".screen")];
+let currentSlide = 0;
+let siteUnlocked = false;
+
+function showSlide(index){
+  if(!siteUnlocked){
+    index = 0;
+  }else{
+    index = Math.max(0, Math.min(slides.length-1, index));
+  }
+
+  currentSlide = index;
+  slides.forEach((s,i)=>s.classList.toggle("active", i===index));
+
+  slides.forEach((s,i)=>{
+    const prev = s.querySelector(".prev");
+    const next = s.querySelector(".next");
+    if(prev) prev.disabled = (i===0);
+    if(next) next.disabled = (!siteUnlocked && i===0) || (i===slides.length-1);
+  });
+
+  const active = slides[index];
+  if(active) active.scrollTop = 0;
+}
+
+document.querySelectorAll(".prev").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    if(!siteUnlocked) return;
+    showSlide(currentSlide-1);
+  });
+});
+
+document.querySelectorAll(".next").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    if(!siteUnlocked) return;
+    showSlide(currentSlide+1);
+  });
+});
+
+showSlide(0);
+
+
+
+["wishBtn","hugBtn","finalBtn"].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  if(id!=="finalBtn"){
+    el.addEventListener("dblclick",()=>showSlide(currentSlide+1));
+  }
+});
+
+
+document.addEventListener("wheel", (e)=>{
+  if(!e.target.closest(".screen.active")) e.preventDefault();
+}, {passive:false});
+
+document.addEventListener("touchmove", (e)=>{
+  if(!e.target.closest(".screen.active")) e.preventDefault();
+}, {passive:false});
+
+</script>
+</body>
+</html>
